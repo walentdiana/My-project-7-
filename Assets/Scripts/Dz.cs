@@ -31,6 +31,5 @@ public class Dz : MonoBehaviour
         {
             Debug.Log($"Элитный со здоровьем {max}");
         }
-         vvvvvv
     }
 }
