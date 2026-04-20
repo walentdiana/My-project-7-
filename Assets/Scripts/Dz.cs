@@ -1,28 +1,60 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class Dz : MonoBehaviour
 {
     private void Start()
     {   
-        /*Задание 1
-
-        int[] scores = new int[6] { 29, 80, 2, 13, 9, 44 };
-
-        int total = 0;
-
-        foreach (var b in scores)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*Задание 3
+        int[] items = new int[9] {12,77,3,90,5,65,99,44,8}; 
+        
+        int overallvalue = items.Sum();
+        
+        Debug.Log($"Общая ценность инвенторя {overallvalue}");
+        
+        
+        int numberOfRareItems = 0;
+        
+        foreach (var i in items)
         {
-            total += b;
+            if (i > 70) 
+            {
+                numberOfRareItems = numberOfRareItems + 1;
+            }
         }
-
-        if (total >= 50)
+        Debug.Log($"Количество редких предметов {numberOfRareItems}");
+        
+        
+        if (numberOfRareItems > 2)
         {
-            Debug.Log("Победа");
+            Debug.Log($"Вы Богатый игрок");
         }
         else
         {
-            Debug.Log("Попробуй снова!");
+            Debug.Log($"Вы Бедный игрок");
         }*/
         
         
@@ -52,6 +84,27 @@ public class Dz : MonoBehaviour
         else
         {
             Debug.Log($"Элитный со здоровьем {max}");
+        }*/
+
+
+        /*Задание 1
+
+        int[] scores = new int[6] { 29, 80, 2, 13, 9, 44 };
+
+        int total = 0;
+
+        foreach (var b in scores)
+        {
+            total += b;
+        }
+
+        if (total >= 50)
+        {
+            Debug.Log("Победа");
+        }
+        else
+        {
+            Debug.Log("Попробуй снова!");
         }*/
     }
 }
