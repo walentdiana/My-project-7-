@@ -6,14 +6,36 @@ public class Dz : MonoBehaviour
 {
     private void Start()
     {
+        /*Задание 5
+        int[] array = new int[15] { 5, 7, 8, 2, 1, 3, 13, 15, 11, 14, 4, 6, 9, 10, 12 };
+
+        string unsorted = string.Join(", ", array);
+        Debug.Log(unsorted);
+
+        for (int i = 0; i < array.Length; i++) 
+        {
+            for (int j = 0; j < array.Length - i - 1; j++)
+            {
+                if (array[j] > array[j + 1])
+                {-=
+                    int k = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = k;
+                }
+            }
+        }
+        string sorted = string.Join(", ", array);
+        Debug.Log(sorted);*/
+        
+
         /*Задание 4
         int[] countEnemyInWaves = new int[15] { 3, 2, 16, 7, 9, 23, 5, 2, 1, 70, 8, 5, 4, 45, 6 };
 
         int allEnemys = countEnemyInWaves.Sum();
-        
+
         int points = 0;
 
-        
+
         if (allEnemys > 30)
         {
             Debug.Log("Сложный уровень");
@@ -22,7 +44,7 @@ public class Dz : MonoBehaviour
         {
             Debug.Log("Легкий уровень");
         }
-        
+
 
         int countEasyWave = 0;
         int countNormalWave = 0;
@@ -33,7 +55,7 @@ public class Dz : MonoBehaviour
             if (c <= 5)
             {
                 countEasyWave = countEasyWave + 1;
-                points = points + 1; 
+                points = points + 1;
             }
             else if (c >= 6 && c <= 10)
             {
@@ -42,17 +64,17 @@ public class Dz : MonoBehaviour
             }
             else if (c >= 11)
             {
-                countHardWave = countHardWave + 1; 
+                countHardWave = countHardWave + 1;
                 points = points + 3;
             }
         }
-        
+
         Debug.Log($"Количесво легких волн {countEasyWave}");
         Debug.Log($"Количество средних волн {countNormalWave}");
         Debug.Log($"Количество сложных волн {countHardWave}");
         Debug.Log(points);*/
-        
-        
+
+
         /*Задание 3
         int[] items = new int[9] {12,77,3,90,5,65,99,44,8};
 
