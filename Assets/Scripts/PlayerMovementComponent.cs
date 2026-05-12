@@ -1,5 +1,7 @@
 using System;
 using Dziana.Input;
+using Dziana.Pooling;
+using Dziana.ProjectTile;
 using UnityEngine;
 
 namespace Dziana.Player
@@ -8,27 +10,26 @@ namespace Dziana.Player
     {
         [SerializeField] private LayerMask _groundLayer;
 
-        private float _groundCheckDistanse = 0.5f;
+        [SerializeField] private float _groundCheckDistanse = 3f;
 
         private bool _bIsGrounded;
 
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
-        private InputComponent _inputComponent;
-        [SerializeField]private SimplePool _pool;
+        [SerializeField] private SimplePoolComponent _pool;
+        [SerializeField] private ProjectTileComponent _projectile;
         
         
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _inputComponent = GetComponent<InputComponent>();
             _playerComponent = GetComponent<PlayerComponent>();
         }
 
 
         private void Update()
         {
-            if (Input.InputComponent.BIsJump() && _bIsGrounded)
+            if (InputComponent.BIsJump() && _bIsGrounded)
             {
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _playerComponent.JumpForce);
             }
@@ -61,7 +62,7 @@ namespace Dziana.Player
             obj.Move(obj.transform.right);
         }
 
-        private void ProjectTileHandler(ProfectTile obj)
+        private void ProjectTileHandler(ProjectTileComponent obj)
         {
             obj.OnTriggered -= ProjectTileHandler;
             _pool.Return(obj);

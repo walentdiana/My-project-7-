@@ -10,7 +10,7 @@ namespace Dziana.Player
         [SerializeField] private float _moveSpeed = 5f;
         internal float MoveSpeed => _moveSpeed;
         
-        [SerializeField] private float _jumpForce = 1;
+        [SerializeField] private float _jumpForce = 10;
         internal float JumpForce => _jumpForce;
         
         private Rigidbody2D _rb;

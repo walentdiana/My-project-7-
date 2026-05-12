@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Dziana.ProjectTile;
 using UnityEngine;
 
 namespace Dziana.Pooling
 {
     public class SimplePoolComponent : MonoBehaviour
     {
-        public ProjectTile _prefab;
-        public int _poolSize = 10;
+        public ProjectTileComponent _prefab;
+        public int _poolSize = 3;
         
-        private Queue<ProjectTile> _pool = new Queue<ProjectTile>();
+        private Queue<ProjectTileComponent> _pool = new Queue<ProjectTileComponent>();
 
+        
         private void Awake()
         {
             for(int i = 0; i < _poolSize; i++)
@@ -21,7 +23,8 @@ namespace Dziana.Pooling
             }
         }
         
-        public ProjectTile Get()
+        
+        public ProjectTileComponent Get()
         {
             if (_pool.Count == 0)
             {
@@ -34,7 +37,8 @@ namespace Dziana.Pooling
             return newObj;
         }
 
-        public void Return()
+        
+        public void Return(ProjectTileComponent obj)
         {
             obj.gameObject.SetActive(false);
             
