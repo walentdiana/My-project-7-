@@ -2,28 +2,27 @@
 using UnityEngine;
 using GameName.Input;
 using GameName.Pooling;
-using GameName.Projectile;
+using GameName.Projectiles;
 
 namespace GameName.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private LayerMask _groundLayer;
-        private float _groundCheckDistance = 0.5f;
+        [SerializeField] private float _groundCheckDistance = 2f;
         private bool _bIsGrounded;
 
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
-        
-        // Префаб/объект снаряда
-        [SerializeField] private Projectile _projectile;
+
         // Компонент ввода (кнопки, оси, выстрел и т.п.)
         [SerializeField] private InputComponent _inputComponent;
+
         // Пул объектов для переиспользования снарядов
         [SerializeField] private SimplePool _pool;
         // Вызывается Unity один раз при создании объекта
-        
-        
+
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
@@ -57,9 +56,9 @@ namespace GameName.Player
             // Проверяем землю под игроком
             // OverlapCircle возвращает true, если круг касается слоя земли
             _bIsGrounded = Physics2D.OverlapCircle(
-                transform.position,        // позиция игрока
-                _groundCheckDistance,       // радиус проверки
-                _groundLayer                // слой земли
+                transform.position, // позиция игрока
+                _groundCheckDistance, // радиус проверки
+                _groundLayer // слой земли
             );
 
             // Получаем направление движения из InputComponent
@@ -102,6 +101,26 @@ namespace GameName.Player
 
             // Возвращаем снаряд обратно в пул
             _pool.Return(obj);
+        }
+
+        // Рисует вспомогательную графику в сцене Unity
+        // Видно только в редакторе
+        private void OnDrawGizmosSelected()
+        {
+            // Проверяем, что transform существует
+            if (transform)
+            {
+                // Цвет круга:
+                // зелёный — если на земле
+                // красный — если в воздухе
+                Gizmos.color = _bIsGrounded ? Color.green : Color.red;
+
+                // Рисуем круг проверки земли
+                Gizmos.DrawWireSphere(
+                    transform.position,
+                    _groundCheckDistance
+                );
+            }
         }
     }
 }

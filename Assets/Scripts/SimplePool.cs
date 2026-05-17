@@ -1,5 +1,6 @@
 // Подключаем коллекции (Queue)
 using System.Collections.Generic;
+using GameName.Projectiles;
 
 // Unity API
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace GameName.Pooling
         public Projectile _prefab;
 
         // Сколько объектов создать заранее при старте
-        public int _initialize = 10;
+        public int _initialize;
 
         // Очередь для хранения неактивных снарядов
         // Queue — FIFO (кто первый зашёл, тот первый вышел)
