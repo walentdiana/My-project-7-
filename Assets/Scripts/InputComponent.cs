@@ -1,40 +1,41 @@
-using UnityEngine;
+using UnityEngine; 
 
-namespace Dziana.Input
+namespace GameName.Input 
 {
-    public class InputComponent : MonoBehaviour
+    public class InputComponent : MonoBehaviour 
     {
-        internal static Vector2 GetMove()
+        // Метод для получения направления движения (WASD / стрелки)
+        internal static Vector2 GetMove() // internal = доступ внутри сборки, static = вызывается без создания объекта
         {
+            // Создаем вектор из двух осей:
+            // Horizontal = A/D или ←/→
+            // Vertical = W/S или ↑/↓
             return new Vector2(
-                UnityEngine.Input.GetAxis("Horizontal"),
-                UnityEngine.Input.GetAxis("Vertical")
+                UnityEngine.Input.GetAxis("Horizontal"), // Получаем горизонтальный ввод
+                UnityEngine.Input.GetAxis("Vertical")    // Получаем вертикальный ввод
             );
         }
 
-        internal static bool BIsJump()
+        // Метод для проверки прыжка
+        internal static bool GetJump() // Возвращает true/false (нажата ли кнопка пыжка)
         {
-            if (UnityEngine.Input.GetButton("Jump"))
+            if (UnityEngine.Input.GetButtonDown("Jump"))
             {
-                return true;
+                return true; 
             }
-            else
-            {
-                return false;
-            }
+
+            return false; 
         }
 
-        internal static bool BIsFire()
+        // Метод для проверки стрельбы
+        internal static bool GetFire()
         {
-            if (UnityEngine.Input.GetButton("Fire1"))
+            if (UnityEngine.Input.GetButtonDown("Fire1"))
             {
-                return true;
+                return true; 
             }
-            else
-            {
-                return false;
-            }
+
+            return false; 
         }
     }
 }
-
