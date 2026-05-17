@@ -17,7 +17,7 @@ namespace Dziana.Player
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
         [SerializeField] private SimplePoolComponent _pool;
-        [SerializeField] private ProjectTileComponent _projectile;
+        [SerializeField] private ProjectileComponent _projectile;
         
         
         private void Awake()
@@ -62,7 +62,7 @@ namespace Dziana.Player
             obj.Move(obj.transform.right);
         }
 
-        private void ProjectTileHandler(ProjectTileComponent obj)
+        private void ProjectTileHandler(ProjectileComponent obj)
         {
             obj.OnTriggered -= ProjectTileHandler;
             _pool.Return(obj);

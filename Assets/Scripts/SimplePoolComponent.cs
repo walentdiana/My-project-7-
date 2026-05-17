@@ -7,10 +7,10 @@ namespace Dziana.Pooling
 {
     public class SimplePoolComponent : MonoBehaviour
     {
-        public ProjectTileComponent _prefab;
+        public ProjectileComponent _prefab;
         public int _poolSize = 3;
         
-        private Queue<ProjectTileComponent> _pool = new Queue<ProjectTileComponent>();
+        private Queue<ProjectileComponent> _pool = new Queue<ProjectileComponent>();
 
         
         private void Awake()
@@ -24,9 +24,9 @@ namespace Dziana.Pooling
         }
         
         
-        public ProjectTileComponent Get()
+        public ProjectileComponent Get()
         {
-            if (_pool.Count == 0)
+            if (_pool.Count > 0)
             {
                 var obj = _pool.Dequeue();
                 obj.gameObject.SetActive(true);
@@ -38,7 +38,7 @@ namespace Dziana.Pooling
         }
 
         
-        public void Return(ProjectTileComponent obj)
+        public void Return(ProjectileComponent obj)
         {
             obj.gameObject.SetActive(false);
             

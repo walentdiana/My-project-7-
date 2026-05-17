@@ -6,12 +6,12 @@ using Dziana.Pooling;
 namespace Dziana.ProjectTile
 {
 
-    public class ProjectTileComponent : MonoBehaviour
+    public class ProjectileComponent : MonoBehaviour
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private GameObject _projectilePrefab;
 
-        public Action<ProjectTileComponent> OnTriggered;
+        public Action<ProjectileComponent> OnTriggered;
 
         private Vector2 _direction = Vector2.zero;
         
