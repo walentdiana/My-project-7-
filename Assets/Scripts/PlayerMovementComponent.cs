@@ -1,8 +1,6 @@
 
 using UnityEngine;
 using GameName.Input;
-using GameName.Pooling;
-using GameName.Projectiles;
 
 namespace GameName.Player
 {
@@ -14,14 +12,12 @@ namespace GameName.Player
 
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
+        
+        private int _jumpCount = 0;
 
         // Компонент ввода (кнопки, оси, выстрел и т.п.)
         [SerializeField] private InputComponent _inputComponent;
-
-        // Пул объектов для переиспользования снарядов
-        [SerializeField] private SimplePool _pool;
-        // Вызывается Unity один раз при создании объекта
-
+        
 
         private void Awake()
         {
@@ -31,36 +27,20 @@ namespace GameName.Player
 
         private void Update()
         {
-            // Проверяем: нажата ли кнопка прыжка И игрок стоит на земле
-            if (InputComponent.GetJump() && _bIsGrounded)
-            {
-                // Задаём новую скорость:
-                // X — оставляем прежнюю
-                // Y — задаём силу прыжка
-                _rb.linearVelocity = new Vector2(
-                    _rb.linearVelocity.x,
-                    _playerComponent.JumpForce
-                );
-            }
-
-            // Если нажата кнопка стрельбы
-            if (InputComponent.GetFire())
-            {
-                // Вызываем метод стрельбы
-                Fire();
-            }
+            Jump();
         }
 
         private void FixedUpdate()
         {
-            // Проверяем землю под игроком
-            // OverlapCircle возвращает true, если круг касается слоя земли
-            _bIsGrounded = Physics2D.OverlapCircle(
-                transform.position, // позиция игрока
-                _groundCheckDistance, // радиус проверки
-                _groundLayer // слой земли
-            );
+            // // Проверяем землю под игроком
+            // // OverlapCircle возвращает true, если круг касается слоя земли
+             _bIsGrounded = Physics2D.OverlapCircle(
+                 transform.position, // позиция игрока
+                 _groundCheckDistance, // радиус проверки
+                 _groundLayer // слой земли
+             );
 
+           
             // Получаем направление движения из InputComponent
             Vector2 moveDir = InputComponent.GetMove();
 
@@ -73,53 +53,24 @@ namespace GameName.Player
             );
         }
 
-        // Метод стрельбы
-        private void Fire()
+        private void Jump()
         {
-            // Берём снаряд из пула (без создания нового объекта)
-            var obj = _pool.Get();
-
-            // Ставим снаряд в позицию игрока
-            obj.transform.position = transform.position;
-
-            // Копируем поворот игрока
-            obj.transform.rotation = transform.rotation;
-
-            // Подписываемся на событие столкновения снаряда
-            obj.OnTriggered += ProjectileHandler;
-
-            // Запускаем движение снаряда
-            // transform.right — направление "вперёд" объекта
-            obj.Move(obj.transform.right);
-        }
-
-        // Метод, который вызывается при попадании снаряда
-        private void ProjectileHandler(Projectile obj)
-        {
-            // Отписываемся от события, чтобы избежать утечек
-            obj.OnTriggered -= ProjectileHandler;
-
-            // Возвращаем снаряд обратно в пул
-            _pool.Return(obj);
-        }
-
-        // Рисует вспомогательную графику в сцене Unity
-        // Видно только в редакторе
-        private void OnDrawGizmosSelected()
-        {
-            // Проверяем, что transform существует
-            if (transform)
+            // Проверяем: нажата ли кнопка прыжка И игрок стоит на земле или он прыгнул меньше 1 раза
+            if (InputComponent.GetJump() && (_bIsGrounded || _jumpCount < 1))
             {
-                // Цвет круга:
-                // зелёный — если на земле
-                // красный — если в воздухе
-                Gizmos.color = _bIsGrounded ? Color.green : Color.red;
-
-                // Рисуем круг проверки земли
-                Gizmos.DrawWireSphere(
-                    transform.position,
-                    _groundCheckDistance
+                // Задаём новую скорость:
+                // X — оставляем прежнюю
+                // Y — задаём силу прыжка
+                _rb.linearVelocity = new Vector2(
+                    _rb.linearVelocity.x,
+                    _playerComponent.JumpForce
                 );
+                _jumpCount++;
+            }
+            
+            if (_bIsGrounded)
+            {
+                _jumpCount = 0;
             }
         }
     }

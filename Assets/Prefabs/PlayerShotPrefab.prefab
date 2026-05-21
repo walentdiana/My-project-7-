@@ -201,5 +201,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3e6611f56cb4b26a1dcde5cd9d6647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dziana.ProjectTile.ProjectTileComponent
-  _speed: 5
+  _speed: 10
   _projectilePrefab: {fileID: 0}

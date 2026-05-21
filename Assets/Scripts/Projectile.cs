@@ -5,7 +5,7 @@ namespace GameName.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] private float _speed = 10f;
+        [SerializeField] private float _speed = 30f;
 
         // Префаб снаряда (возможен для визуала или переинициализации)
         [SerializeField] private GameObject _projectilePrefab;

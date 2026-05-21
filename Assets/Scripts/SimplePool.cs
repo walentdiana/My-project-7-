@@ -16,7 +16,7 @@ namespace GameName.Pooling
         public Projectile _prefab;
 
         // Сколько объектов создать заранее при старте
-        public int _initialize;
+        private int _initialize;
 
         // Очередь для хранения неактивных снарядов
         // Queue — FIFO (кто первый зашёл, тот первый вышел)
