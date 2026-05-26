@@ -12,7 +12,7 @@ namespace GameName.Player
 
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
-        
+
         private int _jumpCount = 0;
 
         // Компонент ввода (кнопки, оси, выстрел и т.п.)
@@ -34,12 +34,10 @@ namespace GameName.Player
         {
             // // Проверяем землю под игроком
             // // OverlapCircle возвращает true, если круг касается слоя земли
-             _bIsGrounded = Physics2D.OverlapCircle(
-                 transform.position, // позиция игрока
-                 _groundCheckDistance, // радиус проверки
-                 _groundLayer // слой земли
-             );
-
+            _bIsGrounded = Physics2D.OverlapCircle(
+                transform.position, // позиция игрока
+                _groundCheckDistance, // радиус проверки
+                _groundLayer); // слой земли
            
             // Получаем направление движения из InputComponent
             Vector2 moveDir = InputComponent.GetMove();
@@ -51,6 +49,20 @@ namespace GameName.Player
                 moveDir.x * _playerComponent.Speed,
                 _rb.linearVelocity.y
             );
+            
+            Flip();
+        }
+
+        private void Flip()
+        {
+            if (_rb.linearVelocity.x != 0)
+            {
+                
+                Vector3 scale = transform.localScale;
+                scale.x = Mathf.Abs(scale.x) * Mathf.Sign(_rb.linearVelocity.x);
+                transform.localScale = scale;
+
+            }
         }
 
         private void Jump()

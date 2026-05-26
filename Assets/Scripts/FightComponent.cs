@@ -41,7 +41,9 @@ namespace GameName.Fight
 
             // Запускаем движение снаряда
             // transform.right — направление "вперёд" объекта
-            obj.Move(obj.transform.right);
+           // obj.Move(obj.transform.right);
+            
+            obj.Move(new Vector2(transform.localScale.x, 0));
         }
         
         // Метод, который вызывается при попадании снаряда
