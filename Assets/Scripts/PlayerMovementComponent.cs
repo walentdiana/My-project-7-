@@ -8,16 +8,17 @@ namespace GameName.Player
     {
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private float _groundCheckDistance = 2f;
-        private bool _bIsGrounded;
 
         private PlayerComponent _playerComponent;
         private Rigidbody2D _rb;
+        [SerializeField] private InputComponent _inputComponent;
 
         private int _jumpCount = 0;
 
-        // Компонент ввода (кнопки, оси, выстрел и т.п.)
-        [SerializeField] private InputComponent _inputComponent;
-        
+        public bool isSecondJump;
+        private bool _bIsGrounded;
+        private bool _wasGrounded;
+
 
         private void Awake()
         {
@@ -27,7 +28,8 @@ namespace GameName.Player
 
         private void Update()
         {
-            Jump();
+            //Jump();
+            Jumpp();
         }
 
         private void FixedUpdate()
@@ -38,7 +40,7 @@ namespace GameName.Player
                 transform.position, // позиция игрока
                 _groundCheckDistance, // радиус проверки
                 _groundLayer); // слой земли
-           
+
             // Получаем направление движения из InputComponent
             Vector2 moveDir = InputComponent.GetMove();
 
@@ -49,7 +51,7 @@ namespace GameName.Player
                 moveDir.x * _playerComponent.Speed,
                 _rb.linearVelocity.y
             );
-            
+
             Flip();
         }
 
@@ -57,7 +59,7 @@ namespace GameName.Player
         {
             if (_rb.linearVelocity.x != 0)
             {
-                
+
                 Vector3 scale = transform.localScale;
                 scale.x = Mathf.Abs(scale.x) * Mathf.Sign(_rb.linearVelocity.x);
                 transform.localScale = scale;
@@ -65,24 +67,45 @@ namespace GameName.Player
             }
         }
 
-        private void Jump()
+        // private void Jump()
+        // {
+        //     // Проверяем: нажата ли кнопка прыжка И игрок стоит на земле или он прыгнул меньше 1 раза
+        //     if (_inputComponent.GetJump() && (_bIsGrounded || _jumpCount < 2))
+        //     {
+        //         _rb.linearVelocity = new Vector2(
+        //             _rb.linearVelocity.x,
+        //             _playerComponent.JumpForce
+        //         );
+        //         _jumpCount++;
+        //     }
+        //     
+        //     if (_bIsGrounded)
+        //     {
+        //         _jumpCount = 0;
+        //     }
+        // }
+
+        private void Jumpp()
         {
-            // Проверяем: нажата ли кнопка прыжка И игрок стоит на земле или он прыгнул меньше 1 раза
-            if (InputComponent.GetJump() && (_bIsGrounded || _jumpCount < 1))
             {
-                // Задаём новую скорость:
-                // X — оставляем прежнюю
-                // Y — задаём силу прыжка
-                _rb.linearVelocity = new Vector2(
-                    _rb.linearVelocity.x,
-                    _playerComponent.JumpForce
-                );
-                _jumpCount++;
-            }
-            
-            if (_bIsGrounded)
-            {
-                _jumpCount = 0;
+                if (_bIsGrounded && !_wasGrounded)
+                {
+                    _jumpCount = _playerComponent._jumpMaxCount;
+                    isSecondJump = false;
+                }
+
+                if (_inputComponent.GetJump() && _jumpCount > 0)
+                {
+                    _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _playerComponent.JumpForce);
+                    _jumpCount--;
+                }
+
+                if ((_jumpCount == 0) && !_bIsGrounded)
+                {
+                    isSecondJump = true;
+                }
+                
+                _wasGrounded = _bIsGrounded;
             }
         }
     }

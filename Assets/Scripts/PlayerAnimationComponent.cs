@@ -1,28 +1,36 @@
-using System;
-using GameName.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace  GameName.Player
+namespace GameName.Player
 {
-    public class PlayerAnimationComponent :  MonoBehaviour
+    public class PlayerAnimationComponent : MonoBehaviour
     {
-        private Vector2 _moveInput; 
-        
         private Animator _animator;
         private Rigidbody2D _rb;
-        
+        private PlayerMovement _playerMovement;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _rb = GetComponent<Rigidbody2D>();
-         }
+            _playerMovement = GetComponent<PlayerMovement>();
+        }
 
         private void Update()
         {
-            bool bIsMoving = Mathf.Abs(_rb.linearVelocity.x) > 0.1f;
-            _animator.SetBool("bIsMove", bIsMoving);
-        } 
+            // Движение
+            bool isMove = Mathf.Abs(_rb.linearVelocity.x) > 0.1f;
+            _animator.SetBool("bIsMove", isMove);
+
+            // Прыжок вверх
+            bool isJump = _rb.linearVelocity.y > 0.1f;
+            _animator.SetBool("bIsJump", isJump);
+
+            // Падение
+            bool isFall = _rb.linearVelocity.y < -0.1f;
+            _animator.SetBool("bIsFall", isFall);
+
+            // Двойной прыжок
+            _animator.SetBool("bDoubleJump", _playerMovement.isSecondJump);
+        }
     }
 }
